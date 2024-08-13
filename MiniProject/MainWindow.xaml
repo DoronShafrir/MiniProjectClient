@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MiniProject"
         mc:Ignorable="d"
+        xmlns:HamburgerMenu="clr-namespace:HamburgerMenu;assembly=HamburgerMenu"
+       
+        
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.RowDefinitions>
+
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -32,8 +36,27 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
-        </ListView>
+        </ListView>-->
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition  />
+        </Grid.ColumnDefinitions>
+        <HamburgerMenu:HamburgerMenu  MenuIconColor="White" SelectionIndicatorColor="White" MenuItemForeground="White" HorizontalAlignment="Left">
+            <HamburgerMenu:HamburgerMenu.Background>
+                <ImageBrush ImageSource="Assets\mountain.jpeg" Stretch="None"/>
+            </HamburgerMenu:HamburgerMenu.Background>
+            <HamburgerMenu:HamburgerMenuItem x:Name="Dummy" Text="Dummy"  Visibility="Collapsed" />
+            
+            <HamburgerMenu:HamburgerMenuItem Icon="Assets/home.png" Text="Home" SelectionCommand="{Binding ElementName=this_}" Selected="Item0_Selected"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="Assets/search.png" Text="Search" SelectionCommand="{Binding ElementName=this_}" Selected="Item1_Selected"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="Assets/favorite.png" Text="Likes" SelectionCommand="{Binding ElementName=this_}" Selected="Item2_Selected"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="Assets/list.png" Text="Lists" SelectionCommand="{Binding ElementName=this_}" Selected="Item3_Selected"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="Assets/person.png" Text="Profile"/>
+        </HamburgerMenu:HamburgerMenu>
+        <Frame x:Name="myFrame" Grid.Column="1" Source="MainPage.xaml"  />
 
     </Grid>
+
+
 </Window>

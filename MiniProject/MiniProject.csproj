@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HamburgerMenu, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HamburgerMenu.0.1.0\lib\net40\HamburgerMenu.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -56,6 +59,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CoursePage.xaml.cs">
+      <DependentUpon>CoursePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LecturerPage.xaml.cs">
+      <DependentUpon>LecturerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StudentPage.xaml.cs">
+      <DependentUpon>StudentPage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="CoursePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LecturerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,6 +95,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="StudentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -87,6 +118,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -104,6 +136,24 @@
       <Project>{2dbb5615-82b2-4bc6-87ca-fb44ed27d6d0}</Project>
       <Name>ViewModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\AddPerson.png" />
+    <Resource Include="Assets\arrow_left.png" />
+    <Resource Include="Assets\arrow_right.png" />
+    <Resource Include="Assets\favorite.png" />
+    <Resource Include="Assets\home.png" />
+    <Resource Include="Assets\landscape.jpeg" />
+    <Resource Include="Assets\Left.png" />
+    <Resource Include="Assets\list.png" />
+    <Resource Include="Assets\mountain.jpeg" />
+    <Resource Include="Assets\nature.jpeg" />
+    <Resource Include="Assets\person.png" />
+    <Resource Include="Assets\Right.png" />
+    <Resource Include="Assets\search.png" />
+    <Resource Include="Assets\sunset.jpeg" />
+    <Resource Include="Assets\wow.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

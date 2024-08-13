@@ -27,16 +27,38 @@ namespace MiniProject
         public MainWindow()
         {
             InitializeComponent();
+            myFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;   //hide the Frame Navigation
+                                                                              // XAML-אפשר גם ישירות מקובץ ה
+
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-           
+        //private void Button_Click(object sender, RoutedEventArgs e)
+
+        //{
+        //StudentDB db = new StudentDB();
+        //    StudentList list = db.SelectAll();
+
+        //    this.lstView3.ItemsSource = list;
+
+        //}
+        private void Item2_Selected(object sender, RoutedEventArgs e)
         {
-        StudentDB db = new StudentDB();
-            StudentList list = db.SelectAll();
+            this.myFrame.Navigate(new LecturerPage());
+        }
 
-            this.lstView3.ItemsSource = list;
+        private void Item1_Selected(object sender, RoutedEventArgs e)
+        {
+            this.myFrame.Navigate(new StudentPage());
+        }
 
+        private void Item3_Selected(object sender, RoutedEventArgs e)
+        {
+            this.myFrame.Navigate(new CoursePage());
+        }
+
+        private void Item0_Selected(object sender, RoutedEventArgs e)
+        {
+            this.myFrame.Navigate(new MainPage()); 
         }
     }
 }

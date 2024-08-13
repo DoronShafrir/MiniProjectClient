@@ -7,23 +7,31 @@ using System.Text;
 using System.Threading.Tasks;
 using Model;
 using System.Data.SqlClient;
+using System.Windows.Input;
 
 namespace ViewModel
 {
     public class StudentDB : PeopleDB
     { 
-    //{
-    //    private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\USER\OneDrive\DSH\Doron\sources\repos\MiniProject\ViewModel\MiniProj.mdf;Integrated Security=True";
-    //    private SqlConnection connection;
-    //    private SqlCommand command;
-    //    private SqlDataReader reader;
+        public string FirstName { get; set; }
 
-    //    public StudentDB()
-    //    {
-    //        connection = new SqlConnection(connectionString);
-    //        command = new SqlCommand();
-    //        command.Connection = this.connection;
-    //    }
+        public StudentDB()
+        {
+            FirstName = "Doron";
+        }
+
+        //{
+        //    private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\USER\OneDrive\DSH\Doron\sources\repos\MiniProject\ViewModel\MiniProj.mdf;Integrated Security=True";
+        //    private SqlConnection connection;
+        //    private SqlCommand command;
+        //    private SqlDataReader reader;
+
+        //    public StudentDB()
+        //    {
+        //        connection = new SqlConnection(connectionString);
+        //        command = new SqlCommand();
+        //        command.Connection = this.connection;
+        //    }
 
         protected override BaseEntity newEntity()
     {
@@ -39,15 +47,29 @@ namespace ViewModel
 
         public StudentList SelectByName(string firstName, string lastName)
         {
-            command.CommandText = "SELECT *,  PeopleTbl.ID AS ID FROM (PeopleTbl INNER JOIN StudentTbl ON PeopleTbl.ID = StudentTbl.Id) " +
-                $"WHERE fName = '{firstName}' AND lName = {lastName}";
+            if (String.IsNullOrEmpty(firstName))
+                command.CommandText = "SELECT *,  PeopleTbl.ID AS ID FROM (PeopleTbl INNER JOIN StudentTbl ON PeopleTbl.ID = StudentTbl.Id) " +
+                $"WHERE lName = '{lastName}'";
+            else if (String.IsNullOrEmpty(lastName))
+                command.CommandText = "SELECT *,  PeopleTbl.ID AS ID FROM (PeopleTbl INNER JOIN StudentTbl ON PeopleTbl.ID = StudentTbl.Id) " +
+                $"WHERE fName = '{firstName}' ";
+            else
+                command.CommandText = "SELECT *,  PeopleTbl.ID AS ID FROM (PeopleTbl INNER JOIN StudentTbl ON PeopleTbl.ID = StudentTbl.Id) " +
+                $"WHERE fName = '{firstName}' AND lName = '{lastName}'";
+            return new StudentList(base.Select());
+
+        }
+        public StudentList SelectByFirstName()
+        {
+                command.CommandText = "SELECT *,  PeopleTbl.ID AS ID FROM (PeopleTbl INNER JOIN StudentTbl ON PeopleTbl.ID = StudentTbl.Id) " +
+                $"WHERE fName = '{this.FirstName}'";
             return new StudentList(base.Select());
         }
 
-        public StudentList SelectByID(int id)
+            public StudentList SelectByID(int id)
         {
-            command.CommandText = "SELECT *, PeopleTbl.ID AS ID FROM (PeopleTbl INNER JOIN StudentTbl ON PeopleTbl.ID = StudentTbl.Id) " +
-                $"WHERE ID = '{id}'";
+            command.CommandText = "SELECT *, PeopleTbl.Id AS ID FROM (PeopleTbl INNER JOIN StudentTbl ON PeopleTbl.Id = StudentTbl.Id) " +
+                $"WHERE PeopleTbl.ID = '{id}'";
             return new StudentList(base.Select());
         }
 

@@ -18,6 +18,17 @@ namespace ViewModel
         protected abstract BaseEntity newEntity();
         public  abstract void CreateModel(BaseEntity entity);
 
+        public abstract string CreateInsertSql(BaseEntity entity);
+        public abstract string CreateUpdatetSql(BaseEntity entity);
+        public abstract string CreateDeleteSql(BaseEntity entity);
+
+        public List<BaseEntity> inserted = new List<BaseEntity>();
+        public List<BaseEntity> updated = new List<BaseEntity>();
+        public List<BaseEntity> deleted = new List<BaseEntity>();
+
+
+
+
         
 
         public BaseDB()
@@ -56,7 +67,47 @@ namespace ViewModel
             }
             return list;
         }
+        public int SaveChanges()
+        {
+            int records_affected = 0; 
+            SqlCommand cmd =new SqlCommand();
+            try
+            {
+                cmd.Connection = this.connection;
+                this.connection.Open();
 
-        
+                foreach(var entity in inserted)
+                {
+                    cmd.CommandText = CreateInsertSql(entity);
+                    records_affected += cmd.ExecuteNonQuery;
+                }
+                foreach (var entity in updated)
+                {
+                    cmd.CommandText = CreateUpdatetSql(entity);
+                    records_affected += cmd.ExecuteNonQuary();
+                }
+                foreach (var entity in delited)
+                {
+                    cmd.CommandText = CreateDeleteSql(entity);
+                    records_affected += cmd.ExecuteNonQuary();
+                }
+            }
+            catch(Exception e)
+            {
+
+            }
+            finally
+            {
+                inserted.Clear();
+                updated.Clear();
+                deleted.Clear();
+
+                if (connection.State == System.Data.ConnectionState.Open)
+                    connection.Close();
+            }
+            return records_affected;
+        }
+
+        protected abstract string CreateInsertSql(BaseEntity entity);
     }
 }
