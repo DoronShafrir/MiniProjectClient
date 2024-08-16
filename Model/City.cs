@@ -9,7 +9,6 @@ namespace Model
     public class City :BaseEntity 
     {
         string name;
-
         public string Name { get => name; set => name = value; }
     }
 }

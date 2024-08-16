@@ -8,32 +8,23 @@ using System.Threading.Tasks;
 using Model;
 using System.Data.SqlClient;
 using System.Windows.Input;
+using System.CodeDom;
 
 namespace ViewModel
 {
     public class StudentDB : PeopleDB
     { 
         public string FirstName { get; set; }
+        public Student student = new Student();
 
         public StudentDB()
         {
             FirstName = "Doron";
         }
 
-        //{
-        //    private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\USER\OneDrive\DSH\Doron\sources\repos\MiniProject\ViewModel\MiniProj.mdf;Integrated Security=True";
-        //    private SqlConnection connection;
-        //    private SqlCommand command;
-        //    private SqlDataReader reader;
+        
 
-        //    public StudentDB()
-        //    {
-        //        connection = new SqlConnection(connectionString);
-        //        command = new SqlCommand();
-        //        command.Connection = this.connection;
-        //    }
-
-        protected override BaseEntity newEntity()
+        public override BaseEntity newEntity()
     {
         return new Student(); //as BaseEntity;
     }
@@ -73,51 +64,41 @@ namespace ViewModel
             return new StudentList(base.Select());
         }
 
-        //public StudentList Select()
-        //{
-        //    StudentList studentList = new StudentList();
-        //    try
-        //    {
-        //        command.Connection = connection;
-        //        connection.Open();
-        //        reader = command.ExecuteReader();
-        //        Student student;
-        //        while (reader.Read())
-        //        {
-                    //student = new Student();
-                    //student.Id = (int)reader["ID"];
-                    //student.Fname = reader["FirstName"].ToString();
-                    //student.Lname = reader["LastName"].ToString();
-                    //student.Phone = (int)reader["Telephone"];
-                    //int city = (int)reader["City"];
-                    //student.City = CityDB.SelectByID(city);
-        //            studentList.Add(CreateModel(student, CityDB));
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        System.Diagnostics.Debug.WriteLine(ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        if (reader != null)
-        //            reader.Close();
-        //        if (connection.State == ConnectionState.Open)
-        //            connection.Close();
-        //    }
-        //    return studentList;
-        //}
+       
         public  void CreateModel(Student student)
         {
             base.CreateModel(student);
-            //student.Id = (int)reader["ID"];
-            //student.Fname = reader["FirstName"].ToString();
-            //student.Lname = reader["LastName"].ToString();
-            //student.Phone = (int)reader["Telephone"];
-            //int city = (int)reader["City"];
-            //student.City = CityDB.SelectById(city);
-            //return student;
+            
         }
+
+        public  int CreateInsertSql(Student student)
+        {
+            string sqlStr = $"INSERT INTO PeopleTbl (fName, lName, city,  phone) VALUES('{student.Fname}', '{student.Lname}', {student.City.Id}, {student.Phone})";         
+            int Student_Id =  base.SaveChanges(sqlStr);
+            string sqlStr2 = $"INSERT INTO  StudentTbl (Id) VALUES ({Student_Id})";
+            return base.SaveChanges(sqlStr2);
+        }
+
+        public int CreateDeletetSql(Student student)
+        {
+            string sqlStr;
+            
+
+            sqlStr = $"DELETE TOP(1) FROM StudentTbl WHERE Id = {student.Id};";
+            base.SaveChanges(sqlStr);
+            sqlStr = $"DELETE TOP(1) FROM PeopleTbl WHERE Id = {student.Id}; ";
+            return base.SaveChanges(sqlStr);
+        }
+        public int CreateUpdateSql(Student student)
+        {
+            string sqlStr;
+            sqlStr = $"UPDATE  PeopleTbl SET fName = '{student.Fname}' , lname = '{student.Lname}', city ={student.City.Id} ,  phone = {student.Phone}" +
+                $"WHERE Id = {student.Id} ;";
+            return base.SaveChanges(sqlStr);
+            
+        }
+
+
     }
 }  
 

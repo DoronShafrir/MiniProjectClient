@@ -8,7 +8,7 @@ namespace ViewModel
     {
         private static CityList list = null;
 
-        protected override BaseEntity newEntity()
+        public override BaseEntity newEntity()
         {
             return new City();  
         }

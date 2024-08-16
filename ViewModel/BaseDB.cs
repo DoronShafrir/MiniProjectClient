@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Data.SqlClient;
 using System;
+using System.CodeDom.Compiler;
 
 namespace ViewModel
 {
@@ -15,17 +16,10 @@ namespace ViewModel
         public SqlCommand command;
         public SqlDataReader reader;
 
-        protected abstract BaseEntity newEntity();
+        public abstract BaseEntity newEntity();
         public  abstract void CreateModel(BaseEntity entity);
 
-        public abstract string CreateInsertSql(BaseEntity entity);
-        public abstract string CreateUpdatetSql(BaseEntity entity);
-        public abstract string CreateDeleteSql(BaseEntity entity);
-
-        public List<BaseEntity> inserted = new List<BaseEntity>();
-        public List<BaseEntity> updated = new List<BaseEntity>();
-        public List<BaseEntity> deleted = new List<BaseEntity>();
-
+          
 
 
 
@@ -67,30 +61,25 @@ namespace ViewModel
             }
             return list;
         }
-        public int SaveChanges()
+        public int SaveChanges(string sqlStr)
         {
-            int records_affected = 0; 
+           
+            int Id_Executed =0 ;
             SqlCommand cmd =new SqlCommand();
             try
-            {
+            {                
                 cmd.Connection = this.connection;
-                this.connection.Open();
+                this.connection.Open();    
+                cmd.CommandText = sqlStr;
+                
+                var temp1 = cmd.ExecuteScalar();
+                if (temp1 != "" && temp1 != null) Id_Executed = (int)temp1;
 
-                foreach(var entity in inserted)
-                {
-                    cmd.CommandText = CreateInsertSql(entity);
-                    records_affected += cmd.ExecuteNonQuery;
-                }
-                foreach (var entity in updated)
-                {
-                    cmd.CommandText = CreateUpdatetSql(entity);
-                    records_affected += cmd.ExecuteNonQuary();
-                }
-                foreach (var entity in delited)
-                {
-                    cmd.CommandText = CreateDeleteSql(entity);
-                    records_affected += cmd.ExecuteNonQuary();
-                }
+                command.CommandText = "Select @@Identity";
+                var temp = command.ExecuteScalar().ToString();
+                if (temp != "" && temp != null) Id_Executed = int.Parse(temp);
+                
+                
             }
             catch(Exception e)
             {
@@ -98,16 +87,13 @@ namespace ViewModel
             }
             finally
             {
-                inserted.Clear();
-                updated.Clear();
-                deleted.Clear();
 
                 if (connection.State == System.Data.ConnectionState.Open)
                     connection.Close();
             }
-            return records_affected;
+            return Id_Executed;
         }
 
-        protected abstract string CreateInsertSql(BaseEntity entity);
+        
     }
 }

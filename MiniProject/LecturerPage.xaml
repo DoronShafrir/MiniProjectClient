@@ -6,42 +6,47 @@
       xmlns:local="clr-namespace:MiniProject"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="LecturerPage">
+      Title="LecturerPage" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <TextBox x:Name="LecturertId" TextAlignment="Center"  Text="" Width="200" Height="35"  HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Button x:Name="LecturerById"  Content="The above Lecturer ID -->"  Click="LecturerById_Click"  Width="200" Height="40"  HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+
+        <TextBox x:Name="LecturerFName" TextAlignment="Center"   Text="FirstName" Width="200" Height="25"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="400,0,0,0" />
+        <TextBox x:Name="LecturerLName" TextAlignment="Center"   Text="LastName" Width="200" Height="25"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="400,0,0,0" />
+        <Button x:Name="LecturerByIName"  Content="The above Lecturer Name -->"  Click="LecturerByName_Click"  Width="200" Height="25"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="400,0,0,0"/>
+
+
+        <Button Width="200" HorizontalAlignment="Right" Height="35"  VerticalAlignment="Top"  Click="Lecturer_List_Click" Content="Get Lecturers List"/>
         
-        <TextBox x:Name="LecturerId" TextAlignment="Center"   Text="" Width="200" Height="35"  HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Button x:Name="LectureById"  Content="The above Lecturer Id -->"  Click="LectureById_Click" Width="200" Height="40"  HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-
-        <TextBox x:Name="LecturerFName" TextAlignment="Center"   Text="" Width="200" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Top" />
-        <TextBox x:Name="LecturerLName" TextAlignment="Center"   Text="" Width="200" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Button x:Name="LectureByIName"  Content="The above Lecturer Id -->"  Click="LectureByIName_Click"  Width="200" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-
-        <Button Width="200" x:Name="Lecturer_List"  HorizontalAlignment="Right" Click="Lecturer_List_Click" Content="Get Lecturers List"/>
+        <Button Width="200" x:Name="Add_Lecturer" HorizontalAlignment="Right" Height="40"  VerticalAlignment="Bottom"  Click="Add_Lecturer_Click"  >
+            <Image Source="Assets\add-group.png" />
+        </Button>
         <ListView Name="lstViewLecturer" Margin="5"  Grid.Row="1">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Update" Click="MenuItem_Upd"/>
+                    <MenuItem Header="Delete" Click="MenuItem_Del"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="First Name Name" Width="120"  DisplayMemberBinding="{Binding Fname}" />
                     <GridViewColumn Header="Last Name" Width="120" DisplayMemberBinding="{Binding Lname}" />
                     <GridViewColumn Header="City" Width="150" DisplayMemberBinding="{Binding City.Name}" />
-                    <GridViewColumn Header="Phone" Width="150"  DisplayMemberBinding="{Binding Phone}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image  Source="Assets/Email.png" Height="25"></Image>
-                                    <TextBlock Text=" - "></TextBlock>
-                                    <TextBlock Text="{Binding Email}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    <GridViewColumn Header="Phone" Width="150"  DisplayMemberBinding="{Binding Phone}"/>
+                    <GridViewColumn Header="Department" Width="150"  DisplayMemberBinding="{Binding Deprtment}"/>
+
                 </GridView>
             </ListView.View>
         </ListView>
-        
+        <Button Content="SelectByFirstName" Click="Button_Click_FirstName" HorizontalAlignment="Left" Height="25" Margin="200,35,0,0" VerticalAlignment="Bottom" Width="200"/>
+        <TextBox x:Name="TextBoxByName" HorizontalAlignment="Left" Height="25" Margin="200,0,0,0" TextWrapping="Wrap" Text="{Binding FirstName}" VerticalAlignment="Top" Width="200"/>
+        <TextBlock x:Name="TextBlockByName" HorizontalAlignment="Left" Height="25" Margin="200,0,0,0" TextWrapping="Wrap" Text="{Binding FirstName}" VerticalAlignment="Center" Width="200"/>
+
     </Grid>
 </Page>

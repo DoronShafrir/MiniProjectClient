@@ -17,16 +17,46 @@ using ViewModel;
 
 namespace MiniProject
 {
-    /// <summary>
-    /// Interaction logic for LecturerPage.xaml
-    /// </summary>
+
+
     public partial class LecturerPage : Page
     {
+
+        LecturerDB db = new LecturerDB();
+        Lecturer lecturer = new Lecturer();// "עצם "בטיפול      
+        LecturerList lecturerList = new LecturerList();
+        private Mode mode;
         public LecturerPage()
+
         {
             InitializeComponent();
-            LecturerDB db = new LecturerDB();
-            
+            this.DataContext = db;
+            RefreshUserList();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigating += NavigationService_Navigating;
+        }
+
+
+        private void NavigationService_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                this.lecturer = ShareData.Data as Lecturer; ;
+                if (mode == Mode.Insert)  //insert Mode
+                {
+                    db.CreateInsertSql(lecturer);
+                }
+                if (mode == Mode.Update)
+                {
+                    db.CreateUpdateSql(lecturer);
+                }
+                RefreshUserList();
+
+                mode = Mode.None;
+            }
         }
 
         private void Lecturer_List_Click(object sender, RoutedEventArgs e)
@@ -36,17 +66,16 @@ namespace MiniProject
 
             this.lstViewLecturer.ItemsSource = list;
         }
-
-        private void LectureById_Click(object sender, RoutedEventArgs e)
+        private void LecturerById_Click(object sender, RoutedEventArgs e)
         {
             LecturerDB db = new LecturerDB();
             this.DataContext = db;
-            int Id = int.Parse(LecturerId.Text);
+            int Id = int.Parse(LecturertId.Text);
             LecturerList list = db.SelectByID(Id);
-            this.lstViewLecturer.ItemsSource = list; 
+            this.lstViewLecturer.ItemsSource = list;
         }
 
-        private void LectureByIName_Click(object sender, RoutedEventArgs e)
+        private void LecturerByName_Click(object sender, RoutedEventArgs e)
         {
             LecturerDB db = new LecturerDB();
             string firstName = LecturerFName.Text;
@@ -57,5 +86,57 @@ namespace MiniProject
             this.DataContext = db;
             this.lstViewLecturer.ItemsSource = list;
         }
+
+
+
+        private void Button_Click_FirstName(object sender, RoutedEventArgs e)
+        {
+            LecturerList list = db.SelectByFirstName();
+            this.lstViewLecturer.ItemsSource = list;
+        }
+
+       
+
+        private void MenuItem_Upd(object sender, RoutedEventArgs e)
+        {
+            mode = Mode.Update;
+            ShareData.Data = new BaseEntity() { Id = 2 };
+            Lecturer lecturer = this.lstViewLecturer.SelectedItem as Lecturer;
+            lecturerList.Add(lecturer);
+            // בו הדף הזה נמצא, שבו השתמשו כדי לנווט לפה Frame-מביא את ה
+            NavigationService nav = NavigationService.GetNavigationService(this);
+            nav.Navigate(new InsertPersonPage(lecturer));  // שלח את המשתמש החדש כפרמטר לבנאי של    
+        }
+
+        private void MenuItem_Del(object sender, RoutedEventArgs e)
+        {
+            Lecturer lecturer = this.lstViewLecturer.SelectedItem as Lecturer;
+            db.CreateDeletetSql(lecturer); 
+
+            RefreshUserList();
+
+        }
+        private void Add_Lecturer_Click(object sender, RoutedEventArgs e)
+        {
+            mode = Mode.Insert;
+            ShareData.Data = new BaseEntity() { Id = 2 };
+
+            // בו הדף הזה נמצא, שבו השתמשו כדי לנווט לפה Frame-מביא את ה
+            NavigationService nav = NavigationService.GetNavigationService(this);
+            nav.Navigate(new InsertPersonPage(lecturer));  // שלח את המשתמש החדש כפרמטר לבנאי של 
+
+        }
+
+
+
+        private void RefreshUserList()
+        {
+            LecturerDB db = new LecturerDB();
+            LecturerList list = db.SelectAll();
+            this.lstViewLecturer.ItemsSource = list;
+        }
+
+       
     }
 }
+
