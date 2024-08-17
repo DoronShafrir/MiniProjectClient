@@ -8,11 +8,13 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="StudentPage"  Loaded="Page_Loaded"  >
 
-    <Grid>
+    <Grid Background="Aqua">
         <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="75"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
         <TextBox x:Name="StudentId" TextAlignment="Center"  Text="" Width="200" Height="35"  HorizontalAlignment="Left" VerticalAlignment="Top" />
         <Button x:Name="StudentById"  Content="The above Student ID -->"  Click="StudentById_Click"  Width="200" Height="40"  HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
 
@@ -25,9 +27,13 @@
         <Button Width="200" x:Name="Add_Student" HorizontalAlignment="Right" Height="40"  VerticalAlignment="Bottom"  Click="Add_Student_Click"  >
             <Image Source="Assets\add-group.png" />
         </Button>
+            <Button Content="SelectByFirstName" Click="Button_Click_FirstName" HorizontalAlignment="Left" Height="25" Margin="200,35,0,0" VerticalAlignment="Bottom" Width="200"/>
+            <TextBox x:Name="TextBoxByName" HorizontalAlignment="Left" Height="25" Margin="200,0,0,0" TextWrapping="Wrap" Text="{Binding FirstName}" VerticalAlignment="Top" Width="200"/>
+            <TextBlock x:Name="TextBlockByName" HorizontalAlignment="Left" Height="25" Margin="200,0,0,0" TextWrapping="Wrap" Text="{Binding FirstName}" VerticalAlignment="Center" Width="200"/>
+
+        </Grid>
         
-        
-        <ListView Name="lstViewStudent" Margin="5"  Grid.Row="1">
+        <ListView Name="lstViewStudent" Margin="5"  Grid.Row="2">
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Update" Click="MenuItem_Upd"/>
@@ -53,8 +59,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="SelectByFirstName" Click="Button_Click_FirstName" HorizontalAlignment="Left" Height="25" Margin="200,35,0,0" VerticalAlignment="Bottom" Width="200"/>
-        <TextBox x:Name="TextBoxByName" HorizontalAlignment="Left" Height="25" Margin="200,0,0,0" TextWrapping="Wrap" Text="{Binding FirstName}" VerticalAlignment="Top" Width="200"/>
-        <TextBlock x:Name="TextBlockByName" HorizontalAlignment="Left" Height="25" Margin="200,0,0,0" TextWrapping="Wrap" Text="{Binding FirstName}" VerticalAlignment="Center" Width="200"/>
+        
     </Grid>
 </Page>

@@ -64,12 +64,8 @@ namespace ViewModel
             return new StudentList(base.Select());
         }
 
+
        
-        public  void CreateModel(Student student)
-        {
-            base.CreateModel(student);
-            
-        }
 
         public  int CreateInsertSql(Student student)
         {
@@ -98,7 +94,10 @@ namespace ViewModel
             
         }
 
-
+        public override void CreateLocalModel(BaseEntity entity)
+        {
+            
+        }
     }
 }  
 

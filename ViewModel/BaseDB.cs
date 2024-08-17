@@ -46,7 +46,7 @@ namespace ViewModel
                 while(reader.Read())
                 {
                     entity = newEntity();
-                    this.CreateModel(entity);
+                    CreateModel(entity);
                     list.Add(entity);
                 }
             }

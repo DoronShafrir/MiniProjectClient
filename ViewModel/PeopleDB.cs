@@ -3,8 +3,10 @@ using System.Xml.Linq;
 
 namespace ViewModel
 {
-    public abstract class PeopleDB: BaseDB
+    
+    public abstract class PeopleDB : BaseDB
     {
+        public abstract void CreateLocalModel(BaseEntity entity);
         public override void CreateModel(BaseEntity entity)
         {
             People people = entity as People;
@@ -14,6 +16,7 @@ namespace ViewModel
             people.Phone = (int)reader["phone"];
             int city = (int)reader["city"];
             people.City = CityDB.SelectById(city);
+            CreateLocalModel(people);
 
 
 

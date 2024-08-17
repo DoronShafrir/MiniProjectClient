@@ -21,7 +21,7 @@ namespace ViewModel
         }
         public LecturerList SelectAll()
         {
-            command.CommandText = "SELECT *,  PeopleTbl.Id AS ID FROM (PeopleTbl INNER JOIN LecturerTbl ON PeopleTbl.Id = LecturerTbl.Id); ";
+            command.CommandText = "SELECT *,  PeopleTbl.Id AS ID, LecturerTbl.Department FROM (PeopleTbl INNER JOIN LecturerTbl ON PeopleTbl.Id = LecturerTbl.Id); ";
 
             return new LecturerList(base.Select());
         }
@@ -54,9 +54,11 @@ namespace ViewModel
             return new LecturerList(base.Select());
         }
 
-        public void CreateModel(Lecturer lecturer )
+        public override void CreateLocalModel(BaseEntity entity)
         {
-            base.CreateModel(lecturer);
+            Lecturer lecturer = entity as Lecturer;
+        
+            lecturer.Department = reader["Department"].ToString();
 
         }
 
@@ -87,5 +89,7 @@ namespace ViewModel
 
         }
 
+        
+       
     }
 }

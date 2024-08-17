@@ -39,32 +39,11 @@ namespace MiniProject
 
         public InsertPersonPage(BaseEntity person) : this()
         {
-            // מתבצע בבנאי ברירת מחדל
-            //InitializeComponent();
-            //cityLst = srv.GetAllCity();  // ממלא את רשימת הערים בדף
-            //this.CityCbox.ItemsSource = cityLst;
-
-            
-
-            //if (ShareData.Data.Id == 1)
-            //{
-            //    person = new Student();
-
-            //}
-            //else if (ShareData.Data.Id == 2)
-            //{
-            //    person = new Lecturer();
-
-            //}
+                       
 
             this.person = person;
 
-            //if (person.City != null) // אם מדובר במשתמש קיים
-            //{
-            //    // .המתאים, כדי שיוצג כעיר שנבחרה city את המשתנה usr שם במשתנה 
-            //    person.City = cityLst.Find(c => c.Id == person.City.Id);
-            //}
-
+            
             this.DataContext = person;
 
         }
