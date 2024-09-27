@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="StudentList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Student" nillable="true" type="tns:Student" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StudentList" nillable="true" type="tns:StudentList" />
+  <xs:complexType name="Student">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:People">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="lessonList" nillable="true" type="tns:LessonList" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Student" nillable="true" type="tns:Student" />
+  <xs:complexType name="People">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="City" nillable="true" type="tns:City" />
+          <xs:element minOccurs="0" name="Fname" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Lname" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Phone" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="People" nillable="true" type="tns:People" />
+  <xs:complexType name="BaseEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BaseEntity" nillable="true" type="tns:BaseEntity" />
+  <xs:complexType name="City">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="City" nillable="true" type="tns:City" />
+  <xs:complexType name="LessonList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Lesson" nillable="true" type="tns:Lesson" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LessonList" nillable="true" type="tns:LessonList" />
+  <xs:complexType name="Lesson">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseEntity">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Lesson" nillable="true" type="tns:Lesson" />
+  <xs:complexType name="Lecturer">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:People">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Department" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="lessonList" nillable="true" type="tns:LessonList" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Lecturer" nillable="true" type="tns:Lecturer" />
+  <xs:complexType name="LecturerList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Lecturer" nillable="true" type="tns:Lecturer" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LecturerList" nillable="true" type="tns:LecturerList" />
+  <xs:complexType name="CityList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="City" nillable="true" type="tns:City" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CityList" nillable="true" type="tns:CityList" />
+</xs:schema>

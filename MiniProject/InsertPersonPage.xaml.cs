@@ -42,7 +42,6 @@ namespace MiniProject
                        
 
             this.person = person;
-
             
             this.DataContext = person;
 

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace MiniProject
 {
     /// <summary>
@@ -23,6 +24,16 @@ namespace MiniProject
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        private void TryBtn_Click(object sender, RoutedEventArgs e)
+        {
+           
+            {
+                //LecturerDB db = new LecturerDB();
+                //LecturerList list = db.SelectAll();
+                //this.DataContext = list;
+            }
         }
     }
 }

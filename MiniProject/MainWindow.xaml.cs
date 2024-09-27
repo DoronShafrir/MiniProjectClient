@@ -1,7 +1,7 @@
-﻿using Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ViewModel;
+
 
 
 
@@ -30,6 +30,7 @@ namespace MiniProject
             myFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;   //hide the Frame Navigation
                                                                               // XAML-אפשר גם ישירות מקובץ ה
 
+            
         }
 
         //private void Button_Click(object sender, RoutedEventArgs e)

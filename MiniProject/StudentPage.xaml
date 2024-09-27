@@ -15,24 +15,24 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="1">
-        <TextBox x:Name="StudentId" TextAlignment="Center"  Text="" Width="200" Height="35"  HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Button x:Name="StudentById"  Content="The above Student ID -->"  Click="StudentById_Click"  Width="200" Height="40"  HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+            <TextBox x:Name="StudentId" TextAlignment="Center"  Text="" Width="200" Height="35"  HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Button x:Name="StudentById"  Content="The above Student ID -->"  Click="StudentById_Click"  Width="200" Height="40"  HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
 
-        <TextBox x:Name="StudentFName" TextAlignment="Center"   Text="FirstName" Width="200" Height="25"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="400,0,0,0" />
-        <TextBox x:Name="StudentLName" TextAlignment="Center"   Text="LastName" Width="200" Height="25"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="400,0,0,0" />
-        <Button x:Name="StudentByIName"  Content="The above Student Name -->"  Click="StudentByIName_Click"  Width="200" Height="25"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="400,0,0,0"/>
+            <TextBox x:Name="StudentFName" TextAlignment="Center"   Text="FirstName" Width="200" Height="25"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="400,0,0,0" />
+            <TextBox x:Name="StudentLName" TextAlignment="Center"   Text="LastName" Width="200" Height="25"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="400,0,0,0" />
+            <Button x:Name="StudentByIName"  Content="The above Student Name -->"  Click="StudentByIName_Click"  Width="200" Height="25"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="400,0,0,0"/>
 
 
-        <Button Width="200" HorizontalAlignment="Right" Height="35"  VerticalAlignment="Top"  Click="Button_Click" Content="Get Students List"/>
-        <Button Width="200" x:Name="Add_Student" HorizontalAlignment="Right" Height="40"  VerticalAlignment="Bottom"  Click="Add_Student_Click"  >
-            <Image Source="Assets\add-group.png" />
-        </Button>
+            <Button Width="200" HorizontalAlignment="Right" Height="35"  VerticalAlignment="Top"  Click="Button_Click" Content="Get Students List"/>
+            <Button Width="200" x:Name="Add_Student" HorizontalAlignment="Right" Height="40"  VerticalAlignment="Bottom"  Click="Add_Student_Click"  >
+                <Image Source="Assets\add-group.png" />
+            </Button>
             <Button Content="SelectByFirstName" Click="Button_Click_FirstName" HorizontalAlignment="Left" Height="25" Margin="200,35,0,0" VerticalAlignment="Bottom" Width="200"/>
             <TextBox x:Name="TextBoxByName" HorizontalAlignment="Left" Height="25" Margin="200,0,0,0" TextWrapping="Wrap" Text="{Binding FirstName}" VerticalAlignment="Top" Width="200"/>
             <TextBlock x:Name="TextBlockByName" HorizontalAlignment="Left" Height="25" Margin="200,0,0,0" TextWrapping="Wrap" Text="{Binding FirstName}" VerticalAlignment="Center" Width="200"/>
 
         </Grid>
-        
+
         <ListView Name="lstViewStudent" Margin="5"  Grid.Row="2">
             <ListView.ContextMenu>
                 <ContextMenu>
@@ -42,6 +42,7 @@
             </ListView.ContextMenu>
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Header="ID" Width="100"  DisplayMemberBinding="{Binding Id}" />
                     <GridViewColumn Header="First Name Name" Width="120"  DisplayMemberBinding="{Binding Fname}" />
                     <GridViewColumn Header="Last Name" Width="120" DisplayMemberBinding="{Binding Lname}" />
                     <GridViewColumn Header="City" Width="150" DisplayMemberBinding="{Binding City.Name}" />
@@ -59,6 +60,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
+
     </Grid>
 </Page>

@@ -1,4 +1,4 @@
-﻿using Model;
+﻿using MiniProject.ServiceReference2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,30 +13,34 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ViewModel;
+
 
 namespace MiniProject
 {
-    public enum Mode { None, Update, Insert };
+    
 
-    /// <summary>
-    /// Interaction logic for StudentPage.xaml
-    /// </summary>
+
     public partial class StudentPage : Page
     {
-        StudentDB db = new StudentDB();
-        Student student = new Student();       // "עצם "בטיפול
-        StudentList studentList = new StudentList();
-        private Mode mode;
-        
+        //StudentDB db = new StudentDB();
+        //Student student = new Student();       // "עצם "בטיפול
+        //StudentList studentList = new StudentList();
+
+        //public enum Mode { None, Update, Insert };
+        //Mode mode = new Mode();
 
         public StudentPage()
         {
-            InitializeComponent();            
-            this.DataContext = db;
-            RefreshUserList();
+            InitializeComponent();
+            
+            //this.DataContext = db;
+            //RefreshUserList();
+            ServiceReference2.Service1Client srv = new ServiceReference2.Service1Client();
+            StudentList list = srv.GetStudentList();
+              this.lstViewStudent.ItemsSource = list;
+
         }
-             
+
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -48,96 +52,84 @@ namespace MiniProject
         {
             if (e.NavigationMode == NavigationMode.Back)
             {
-                this.student = ShareData.Data as Student; ;
-                if (mode == Mode.Insert)  //insert Mode
-                {                
-                    db.CreateInsertSql(student);
-                }
-                if (mode == Mode.Update)
-                {
-                    db.CreateUpdateSql(student);
-                }
-                RefreshUserList();
+                
+                ServiceReference2.Service1Client srv = new ServiceReference2.Service1Client();
+                StudentList list = srv.GetStudentList();
+                this.lstViewStudent.ItemsSource = list;
 
-                mode = Mode.None;
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
 
         {
-            StudentDB db = new StudentDB();
-            StudentList list = db.SelectAll();
-
+            //Show all Names
+            ServiceReference2.Service1Client srv = new ServiceReference2.Service1Client();
+            StudentList list = srv.GetStudentList();
             this.lstViewStudent.ItemsSource = list;
-
         }
 
         private void StudentById_Click(object sender, RoutedEventArgs e)
-        {
-            StudentDB db = new StudentDB();
-            this.DataContext = db;
+        {         
             int Id = int.Parse(StudentId.Text);
-            StudentList list = db.SelectByID(Id);
+            ServiceReference2.Service1Client srv = new ServiceReference2.Service1Client();
+            StudentList list = srv.GetStudentListById(Id);
             this.lstViewStudent.ItemsSource = list;
         }
 
         private void StudentByIName_Click(object sender, RoutedEventArgs e)
-        {
-            StudentDB db = new StudentDB();
+        {            
             string firstName = StudentFName.Text;
             string lastName = StudentLName.Text;
 
-            StudentList list = db.SelectByName(firstName, lastName);
-            this.DataContext = db;
+            ServiceReference2.Service1Client srv = new ServiceReference2.Service1Client();
+            StudentList list = srv.GetStudentListByName(firstName, lastName);
             this.lstViewStudent.ItemsSource = list;
         }
 
-        
+
 
         private void Button_Click_FirstName(object sender, RoutedEventArgs e)
         {
-            StudentList list = db.SelectByFirstName();            
-            this.lstViewStudent.ItemsSource = list;
+            //StudentList list = db.SelectByFirstName();
+            //this.lstViewStudent.ItemsSource = list;
         }
 
         private void MenuItem_Upd(object sender, RoutedEventArgs e)
-        {
-            mode = Mode.Update;
-            ShareData.Data = new BaseEntity() { Id = 1 };
+        {           
             Student student = this.lstViewStudent.SelectedItem as Student;
-            studentList.Add(student);
-            // בו הדף הזה נמצא, שבו השתמשו כדי לנווט לפה Frame-מביא את ה
+            
+            //// בו הדף הזה נמצא, שבו השתמשו כדי לנווט לפה Frame-מביא את ה
             NavigationService nav = NavigationService.GetNavigationService(this);
-            nav.Navigate(new InsertPersonPage(student));  // שלח את המשתמש החדש כפרמטר לבנאי של    
+            nav.Navigate(new InsertStudentPage(student.Id));  // שלח את המשתמש החדש כפרמטר לבנאי של    
         }
 
         private void MenuItem_Del(object sender, RoutedEventArgs e)
         {
             Student student = this.lstViewStudent.SelectedItem as Student;
-            db.CreateDeletetSql(student);
+            ServiceReference2.Service1Client srv = new ServiceReference2.Service1Client();
+            int l = srv.GetDeleteStudent(student);
 
-            RefreshUserList();
+            StudentList list = srv.GetStudentList();
+
+            this.lstViewStudent.ItemsSource = list;
+
 
         }
 
         private void Add_Student_Click(object sender, RoutedEventArgs e)
         {
-            mode = Mode.Insert;
-            ShareData.Data = new BaseEntity() { Id = 1 };
-            
+           
+            //ShareData.Data = new BaseEntity() { Id = 1 };
+
             // בו הדף הזה נמצא, שבו השתמשו כדי לנווט לפה Frame-מביא את ה
             NavigationService nav = NavigationService.GetNavigationService(this);
-            nav.Navigate(new InsertPersonPage(student));  // שלח את המשתמש החדש כפרמטר לבנאי של 
+            int id = 0;
+            nav.Navigate(new InsertStudentPage(id));  // פותח דף להכנסת נתוני המשתשמש
         }
 
 
 
-        private void RefreshUserList()
-        {
-            StudentDB db = new StudentDB();
-            StudentList list = db.SelectAll();
-            this.lstViewStudent.ItemsSource = list;
-        }
+       
     }
 }
